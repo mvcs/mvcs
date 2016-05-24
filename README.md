@@ -13,9 +13,7 @@ loose-coupling.
 The main benefits of this approach are:
 
 -   **Persistence-agnosticism**. The Persistence Layer can evolve and even be
-    replaced without refactoring business logic. Think of Mezzanine and Trifle
-    and how much effort it took to migrate those data stores out of API -- this
-    abstraction helps solve that problem.
+    replaced without refactoring business logic.
 -   **Controller-agnosticism**. The Service Layer can be exposed in
     multiple controllers. For example, the same "users" Service Layer can be
     used in multiple views, API versions, Thrift handlers, scripts, CLI
