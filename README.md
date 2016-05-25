@@ -38,52 +38,15 @@ MVCS works by dividing a domain into a common set of layers, often called the
 
 ![](onion.png)
 
-  -------------------------------------------------------------------------------
-  Layer         Responsibility
-  ------------  -----------------------------------------------------------------
-  Entities      Often referred to as "Domain Models", these classes represent
-                business "things" - for example, a User in the Users Service.
-                These objects are the language of the application. Their
-                responsibility is to be a container (often called an Envelope) for
-                the business object, to represent relationships to other business
-                objects, to contain business logic related to these objects, and
-                to optionally do validation & serialization of themselves.
-                Entities are hydrated by the Service Layer by mapping raw data
-                from Gateways & Repositories to them with Mappers.
-
-  Service       These classes contain all the things your application can do, that
-  Layer         is to say they contain all of your application's Application
-  Classes       Logic. They are a way to "expose" your application to the
-                Controller Layer and to other Service Layer Classes. They speak in
-                Entities by hydrating them with raw data from Gateways &
-                Repositories using Mappers. The Service Layer is the outer most
-                layer of the Service Onion - you can imagine peeling back the
-                layers, revealing the persistence internals. The Service Layer
-                never leaks persistence details. In order to avoid overloading the
-                term Services, which has come to mean API's in a distributed
-                system, its better to use the term "Service Layer Class" or
-                "Service Layer" when referring to this layer.
-
-  Repositories  Contain queries to internal databases and returns raw data.
-                This data is typically mapped to Entities by the Service Layer
-                using Mappers. When using an ORM, Repositories tend to query
-                against Data Store classes, whose only responsibility are to
-                represent various tables and relationships between them. For
-                each query needed in an application, there should be a
-                correlating method on a Repository which executes the query and
-                returns the raw data.
-
-  Gateways      Sister-layer to Repositories - Gateways contains queries to
-                external services (instead of internal databases) and return
-                raw data. This data is typically mapped to Entities by the
-                Service Layer using Mappers. Gateways tend to query against
-                client libraries (like generated Thrift, for example) or
-                network libraries. If needed, connection details may be
-                represented in a Connection class, for example when configuring
-                an instantiating an API client.
-
-  Mappers       Responsible for mapping persistence to and from Entities.
-  -------------------------------------------------------------------------------
+  
+  | Layer | Responsibility |
+  | --- | --- | 
+  | Entities | Often referred to as "Domain Models", these classes represent business "things" - for example, a User in the Users Service. These objects are the language of the application. Their responsibility is to be a container (often called an Envelope) for the business object, to represent relationships to other business objects, to contain business logic related to these objects, and to optionally do validation & serialization of themselves. Entities are hydrated by the Service Layer by mapping raw data from Gateways & Repositories to them with Mappers. |
+  | Service Layer Classes | These classes contain all the things your application can do, that is to say they contain all of your application's Application Logic. They are a way to "expose" your application to the Controller Layer and to other Service Layer Classes. They speak in Entities by hydrating them with raw data from Gateways & Repositories using Mappers. The Service Layer is the outer most layer of the Service Onion - you can imagine peeling back the layers, revealing the persistence internals. The Service Layer never leaks persistence details. In order to avoid overloading the term Services, which has come to mean API's in a distributed system, its better to use the term "Service Layer Class" or "Service Layer" when referring to this layer. |
+  | Repositories | Contain queries to internal databases and returns raw data. This data is typically mapped to Entities by the Service Layer using Mappers. When using an ORM, Repositories tend to query against Data Store classes, whose only responsibility are to represent various tables and relationships between them. For each query needed in an application, there should be a correlating method on a Repository which executes the query and returns the raw data. |
+| Gateways | Sister-layer to Repositories - Gateways contains queries to external services (instead of internal databases) and return raw data. This data is typically mapped to Entities by the Service Layer using Mappers. Gateways tend to query against client libraries (like generated Thrift, for example) or network libraries. If needed, connection details may be represented in a Connection class, for example when configuring an instantiating an API client.
+| Mappers | Responsible for mapping persistence to and from Entities. |
+ 
 
 It's important to note that the inner-most layers of the Service Onion **must
 not** know about layers that live above them. For example, Entities do not know
