@@ -1,7 +1,6 @@
 # MVCS
 
-Introduction
-============
+## Introduction
 
 MVCS is an application development approach that adds an additional layer to
 MVC -- the **Service Layer**. In the same way that MVC takes the position that
@@ -30,8 +29,7 @@ The main benefits of this approach are:
     responsibilities and how different layers of an application
     should interact.
 
-The Service Onion
-=================
+## The Service Onion
 
 MVCS works by dividing a domain into a common set of layers, often called the
 "Service Onion":
@@ -54,8 +52,7 @@ about their own persistence or the Service Layer or view or jobs in the
 Controller Layer. This is the same for each layer in the Service Onion and is
 where most of the MVCS's decoupling benefits come from.
 
-Directory Structure
-===================
+## Directory Structure
 
 On the filesystem, these layers tend to be named after their problem domain and
 then organized by responsibility.
@@ -93,8 +90,7 @@ Note that all persistence layer classes are stored as modules in the services
 directory. This is because persistence details should be hidden by the Service
 Layer.
 
-Testing
-=======
+## Testing
 
 MVCS not only gives you a vocabulary and method for organizing commonly
 recurring functionality - it also offers predictable testing patterns. The
@@ -105,25 +101,14 @@ assumptions on internal databases and external services are correct.
 
 ![](testing.png)
 
-  -----------------------------------------------------------------------------
-  Layer         How to test
-  ------------- ---------------------------------------------------------------
-  Entities      Unit tests
-
-  Service Layer Unit tests; Mock the persistence layer
-  Classes
-
-  Repositories  Integration tests; Use fixtures to set up the state of the
-                world
-
-  Gateways      Integration tests; Use a [vcr] to record and replay the state
-                of the world
-
-  Mappers       Unit tests
-
-  Controllers   Unit tests; Mock the service layer; Optional and very selective
-                end-to-end-tests
-  -----------------------------------------------------------------------------
+| Layer | How to test |
+| --- | --- |
+| Entities | Unit tests |
+| Service Layer Classes | Unit tests; Mock the persistence layer |
+| Repositories | Integration tests; Use fixtures to set up the state of the world |
+| Gateways | Integration tests; Use a [vcr] to record and replay the state of the world |
+| Mappers | Unit tests |
+| Controllers |Unit tests; Mock the service layer; Optional and very selective end-to-end-tests |
 
   [vcr]: https://github.com/kevin1024/vcrpy
 
@@ -134,8 +119,7 @@ assumptions on internal databases and external services are correct.
 
   [you should *NEVER* mock code that you don't own]: http://blog.8thlight.com/eric-smith/2011/10/27/thats-not-yours.html
 
-History / Related Reading
-=========================
+## History / Related Reading
 
 Employing Service Layers in application development stems from the marriage of
 DDD (dividing a problem area by its pieces and developing a common language to
@@ -197,19 +181,3 @@ Check out the following readings for more insight:
     principles](https://www.youtube.com/watch?v=_eWWONHXc9c)
 -   [Foundations of OOP Introduction to GRASP
     principles](https://www.youtube.com/watch?v=hqYy6Yfa-Lg)
-
-FAQ
-===
-
-How should I name service/view/repo/gateway methods?
-----------------------------------------------------
-
-Here's a format you could use:
-
--   views: HTTP verbs (`get`, `put`, `post`, `delete`)
--   repos/gateways: filesystem-like verbs (`read`, `write_new`, `write_update`,
-    `drop`)
--   service layer classes: (`fetch`, `create`, `update`, `remove`)
-
-Otherwise you might get confused as you end up with very similar method names
-across responsibilities.
